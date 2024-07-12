@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import bcryptjs from "bcryptjs";
 import User from "../models/user.model";
 import generateTokenSetCookie from "../service/generateToken";
+import mongoose from "mongoose";
 
 export const singupUser = async (req: Request, res: Response) => {
     try {
@@ -39,7 +40,7 @@ export const singupUser = async (req: Request, res: Response) => {
             profilePic: gender === "male" ? boyProfilePic : girlProfilePic
         });
         console.log(user);
-        generateTokenSetCookie(user._id, res);
+        generateTokenSetCookie(user._id as mongoose.Types.ObjectId, res);
         return res.status(200).json(
             {   
                 message: "User created successfully",
@@ -66,7 +67,7 @@ export const loginUser = async (req: Request, res: Response) => {
             return res.status(404).json({ message: 'User not found or invalid credentials' });
         }
 
-        generateTokenSetCookie(user._id, res);
+        generateTokenSetCookie(user._id as mongoose.Types.ObjectId, res);
         res.status(200).json({
             message: "Logged In successfully",
             success: true
