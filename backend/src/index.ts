@@ -5,12 +5,13 @@ import dbConnect from "./service/dbConnect";
 import messageRoutes from "./routes/message.routes";
 import userRoutes from "./routes/user.routes";
 import cookieparser from "cookie-parser";
+import cors from "cors";
 
 dotevn.config();
 dbConnect();
 const app: Application = express();
 const PORT= process.env.PORT ||  3000;
-
+app.use(cors());
 app.use(express.json());
 app.use(cookieparser());
 app.get("/", (req : Request, res: Response) =>{
