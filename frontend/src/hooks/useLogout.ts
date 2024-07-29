@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
-
+import { useNavigate } from "react-router-dom";
 const useLogout = () => {
     const [loading, setLoading] = useState(false);
     const {setAuthUser} = useAuthContext();
+    const navigate = useNavigate()
 
     
     const logout = async () => {
@@ -16,11 +17,11 @@ const useLogout = () => {
             }
         });
 
-        const data = await res.json();
-        console.log(data);
-        localStorage.removeItem("chat-user");
-        setAuthUser("null");
+        await res.json();
         
+        localStorage.removeItem("chat-user");
+        setAuthUser(null);
+        // navigate("/login");
    
     } catch (error) {
         console.log("error in logout", error)   

@@ -19,7 +19,6 @@ const Conversation: React.FC<ConversationProps> = ({conversation, emoji, lastInd
 		`}
 		onClick={() => {
 			setSelectedConversation(conversation);
-			console.log(selectedConversation);
 		}}
 		>
  				<div className='avatar online'>

@@ -1,10 +1,12 @@
 import React from "react"
+import userConverstaion from "../../zustand/useConversation";
 const Message: React.FC = () => {
+    const {selectedConversation} = userConverstaion();
     return (
         <div className="chat chat-end">
             <div className="chat-image avatar">
                 <div className="w-10 rounded-full">
-                    <img src="" alt="Tailwind CSS chat bubble" />
+                    <img src={selectedConversation.profilePic} alt="Tailwind CSS chat bubble" />
                 </div>
             </div>
             <div className={`chat-bubble text-white bg-blue-500`}>Hi! What is upp</div>

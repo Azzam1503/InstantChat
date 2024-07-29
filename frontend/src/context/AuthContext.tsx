@@ -22,6 +22,8 @@ interface AuthProviderProps {
 }
 
 export const AuthContextProvider = ({children}: AuthProviderProps) =>{
+    // const storedUser = localStorage.getItem("chat-user");
+    // const initialAuthUser = storedUser ? JSON.parse(storedUser) : null;
     const [authUser, setAuthUser] = useState<string | null>(JSON.parse(localStorage.getItem("chat-user")|| "null"));
     return <AuthContext.Provider value={{authUser, setAuthUser}}>
         {children}

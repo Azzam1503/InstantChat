@@ -13,7 +13,7 @@ const useGetConversations = () => {
 
     useEffect(() => {
         const getConverstions = async () => {
-            // setLoading(true);
+            setLoading(true);
             try {
                 const res = await fetch('/api/users/getUsersForSideBar');
                 const data = await res.json();
