@@ -15,7 +15,7 @@ export interface CustomRequest extends Request {
 const proctectRoute = async (req : CustomRequest, res: Response, next: NextFunction) =>{
     try {
         const token = req.cookies.token;
-        console.log("token",token);
+        // console.log("token-----",token);
         if(!token){
             return res.status(401).json({error: "Unauthorized"});
         }
@@ -25,7 +25,7 @@ const proctectRoute = async (req : CustomRequest, res: Response, next: NextFunct
         if(!decoded){
             return res.status(401).json({error: "Unauthorized"});
         }
-        console.log(decoded);
+        // console.log(decoded);
         const user = await User.findById(decoded.userId).select("-password -profilePic");
 
         if(!user){

@@ -60,18 +60,23 @@ export const loginUser = async (req: Request, res: Response) => {
     try {
         const {username, password} = req.body;
         const user = await User.findOne({username});
-        
+        console.log(user);
         const compare = await bcryptjs.compare(password, user?.password || "");
 
         if (!user || !compare) {
-            return res.status(404).json({ message: 'User not found or invalid credentials' });
+            return res.status(404).json({ error: 'User not found or invalid credentials' });
         }
-
+     
         generateTokenSetCookie(user._id as mongoose.Types.ObjectId, res);
         res.status(200).json({
             message: "Logged In successfully",
-            success: true
+            success: true,
+            id: user._id,
+            username: user.username,
+            email: user.email,
+            profile: user.profilePic
         })
+
     } catch (error) {
         console.log(error);
     }
@@ -79,7 +84,7 @@ export const loginUser = async (req: Request, res: Response) => {
 export const logout = (req: Request, res: Response) => {
     try {
         res.clearCookie("token");
-        res.sendStatus(200);
+        res.status(200).json({message: "Logout successfully"});
     } catch (error) {
         res.sendStatus(500);
     }

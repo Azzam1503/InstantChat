@@ -11,7 +11,10 @@ dotevn.config();
 dbConnect();
 const app: Application = express();
 const PORT= process.env.PORT ||  3000;
-app.use(cors());
+app.use(cors({
+    origin: true,
+    credentials: true
+}));
 app.use(express.json());
 app.use(cookieparser());
 app.get("/", (req : Request, res: Response) =>{
@@ -20,7 +23,7 @@ app.get("/", (req : Request, res: Response) =>{
 
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
-app.use("/api/user", userRoutes);
+app.use("/api/users", userRoutes);
 
 app.listen(PORT, () =>{
     console.log(`Server is running on PORT ${PORT}`);
