@@ -28,8 +28,8 @@ export const singupUser = async (req: Request, res: Response) => {
             });
         }
 
-        const boyProfilePic =  `https://avatar.iran.liara.run/username?username=${username}`;
-        const girlProfilePic =  `https://avatar.iran.liara.run/username?username=${username}`;
+		const boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${username}`;
+		const girlProfilePic = `https://avatar.iran.liara.run/public/girl?username=${username}`;
         
         const user = await User.create({
             fullName,
@@ -43,7 +43,6 @@ export const singupUser = async (req: Request, res: Response) => {
         generateTokenSetCookie(user._id as mongoose.Types.ObjectId, res);
         return res.status(200).json(
             {   
-                message: "User created successfully",
                 id: user._id,
                 username: user.username,
                 profilePic: user.profilePic,
@@ -69,12 +68,11 @@ export const loginUser = async (req: Request, res: Response) => {
      
         generateTokenSetCookie(user._id as mongoose.Types.ObjectId, res);
         res.status(200).json({
-            message: "Logged In successfully",
             success: true,
-            id: user._id,
+            _id: user._id,
             username: user.username,
             email: user.email,
-            profile: user.profilePic
+            profilePic: user.profilePic
         })
 
     } catch (error) {

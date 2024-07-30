@@ -35,7 +35,7 @@ export const sendMessage = async (req: CustomRequest, res: Response) => {
         console.log(newMessage);
         conversation.messages.push(newMessage._id);
         await conversation.save();
-        return res.status(200).json({message: newMessage})
+        return res.status(200).json(newMessage);
     } catch (error) {
         console.log("Error in sendMessage controller", error);
         res.status(500).json({error: "Internal server error"})
@@ -54,9 +54,11 @@ export const getMessages = async (req: CustomRequest, res: Response) =>{
             participants: {$all: [senderId, receiverId]}
         }).populate("messages");
 
-        return res.status(200).json(
-            conversation?.messages
-        );
+        if(!conversation) return res.status(200).json([]);
+
+        const messages = conversation.messages;
+        console.log(messages)
+        return res.status(200).json(messages);
 
     } catch (error) {
         console.log(error);
