@@ -7,11 +7,11 @@ import { TiMessages } from "react-icons/ti";
 const MessageContainer: React.FC = () => {
     const {selectedConversation, setSelectedConversation} = userConverstaion();
 
-    // useEffect(()=> {
+    useEffect(()=> {
 
-    //     //Cleanup function
-    //     return () => setSelectedConversation(null);
-    // },[selectedConversation]);
+        //Cleanup function
+        return () => setSelectedConversation(null);
+    },[]);
     
     return (
         <div className="md:min-w-[450px] flex flex-col" >
@@ -26,7 +26,6 @@ const MessageContainer: React.FC = () => {
                 <Messages />
                 <MessageInput />
             </>}
-            <button className="bg-yellow-400" onClick={() => console.log(selectedConversation)}>Click me</button>
         </div>
     )
 

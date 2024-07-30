@@ -11,17 +11,19 @@ const useGetMessages = () => {
     useEffect(() => {
         const getMessages =async ()=>{
         try {
+            setLoading(true);
             const res = await fetch(`/api/messages/${selectedConversation._id}`);
 
             const data = await res.json();
             
             if(data.error) throw new Error(data.error);
-
+            console.log("Data in usegetMessage", data);
             setMessages(data);
         } catch (error) {
-            toast.error(error.message)
+            console.log(error);
+            toast.error(error.message + "in the getMessages")
         }finally{
-            setLoading(true);
+            setLoading(false);
         }   
         }
 
