@@ -19,6 +19,7 @@ const Message: React.FC<MessageI> = ({message}) => {
     const profilePic = fromMe ? authUser.profilePic : selectedConversation.profilePic;
     const formattedDate = extractTime(message.createdAt);
     const bgColor = fromMe ? 'bg-blue-500' : "";
+    const shouldShake = message.shouldShake ? "shake" : "";
     return (
         <div className={`chat ${chatClassName}`}>
             <div className="chat-image avatar">
@@ -26,7 +27,7 @@ const Message: React.FC<MessageI> = ({message}) => {
                     <img src={profilePic} alt="Tailwind CSS chat bubble" />
                 </div>
             </div>
-            <div className={`chat-bubble text-white ${bgColor} pb-2`}>{message.message}</div>
+            <div className={`chat-bubble text-white ${bgColor} ${shouldShake} pb-2`}>{message.message}</div>
             <div className={`chat-footer opacity-50 text-xs flex gap-1 items-center`}>{formattedDate}</div>
         </div>
     )

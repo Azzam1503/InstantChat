@@ -1,6 +1,7 @@
 import React from 'react';
 import { ConversationI } from '../../hooks/useGetConversations';
 import userConverstaion from '../../zustand/useConversation';
+import { useSocketContext } from '../../context/SocketContext';
 
 interface ConversationProps{
     conversation: ConversationI,
@@ -12,6 +13,9 @@ const Conversation: React.FC<ConversationProps> = ({conversation, emoji, lastInd
 	const {selectedConversation, setSelectedConversation} = userConverstaion();
 
 	const isSelected = selectedConversation?._id === conversation._id;
+	const {onlineUsers} = useSocketContext();
+	const isOnline = onlineUsers.includes(conversation._id);
+
   return (
     <>
        <div className={`flex gap-2 items-center hover:bg-sky-500 rounded p-2 py-1 cursor-pointer
@@ -21,7 +25,7 @@ const Conversation: React.FC<ConversationProps> = ({conversation, emoji, lastInd
 			setSelectedConversation(conversation);
 		}}
 		>
- 				<div className='avatar online'>
+ 				<div className={`avatar ${isOnline? "online" : ""} `}>
  					<div className='w-12 rounded-full'>
  						<img
 							src={conversation.profilePic}

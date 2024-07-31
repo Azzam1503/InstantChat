@@ -18,7 +18,7 @@ const useGetConversations = () => {
                 const res = await fetch('/api/users/getUsersForSideBar');
                 const data = await res.json();
                 if(data.error){
-                    throw new Error(data.error);;
+                    throw new Error(data.error);
                 }
                 setConversations(data.allUsers);
             } catch (error) {

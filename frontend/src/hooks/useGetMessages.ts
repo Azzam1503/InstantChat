@@ -17,6 +17,7 @@ const useGetMessages = () => {
             const data = await res.json();
             
             if(data.error) throw new Error(data.error);
+            console.log("Fetched again")
             console.log("Data in usegetMessage", data);
             setMessages(data);
         } catch (error) {
