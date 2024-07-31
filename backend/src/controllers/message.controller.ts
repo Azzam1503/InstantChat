@@ -3,6 +3,7 @@ import {Response} from "express";
 import { CustomRequest } from "../middlewares/protecteRoute";
 import Conversation from "../models/conversatoin.model";
 import mongoose from "mongoose";
+import { getReceiverSocketId, io } from "../socket/socket";
 
 export const sendMessage = async (req: CustomRequest, res: Response) => {
     try {
@@ -31,10 +32,18 @@ export const sendMessage = async (req: CustomRequest, res: Response) => {
             message
         });
 
-        //TODO Socket.io functionality
-        console.log(newMessage);
+        // console.log(newMessage);
         conversation.messages.push(newMessage._id);
         await conversation.save();
+
+        //TODO Socket.io functionality
+        const receiverSocketId = getReceiverSocketId(receiverId);
+
+        if(receiverSocketId){
+            io.to(receiverSocketId).emit("newMessage", newMessage);
+        } 
+
+
         return res.status(200).json(newMessage);
     } catch (error) {
         console.log("Error in sendMessage controller", error);
@@ -57,7 +66,6 @@ export const getMessages = async (req: CustomRequest, res: Response) =>{
         if(!conversation) return res.status(200).json([]);
 
         const messages = conversation.messages;
-        console.log(messages)
         return res.status(200).json(messages);
 
     } catch (error) {

@@ -59,7 +59,7 @@ export const loginUser = async (req: Request, res: Response) => {
     try {
         const {username, password} = req.body;
         const user = await User.findOne({username});
-        console.log(user);
+        // console.log(user);
         const compare = await bcryptjs.compare(password, user?.password || "");
 
         if (!user || !compare) {
@@ -70,6 +70,7 @@ export const loginUser = async (req: Request, res: Response) => {
         res.status(200).json({
             success: true,
             _id: user._id,
+            fullName: user.fullName,
             username: user.username,
             email: user.email,
             profilePic: user.profilePic
