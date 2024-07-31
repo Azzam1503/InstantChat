@@ -10,7 +10,7 @@ import {app, server} from './socket/socket';
 
 dotevn.config();
 dbConnect();
-// const app: Application = express();
+
 const PORT= process.env.PORT ||  3000;
 app.use(cors({
     origin: true,

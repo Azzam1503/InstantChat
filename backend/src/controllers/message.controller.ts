@@ -2,7 +2,6 @@ import Message from "../models/message.model";
 import {Response} from "express";
 import { CustomRequest } from "../middlewares/protecteRoute";
 import Conversation from "../models/conversatoin.model";
-import mongoose from "mongoose";
 import { getReceiverSocketId, io } from "../socket/socket";
 
 export const sendMessage = async (req: CustomRequest, res: Response) => {
@@ -10,9 +9,9 @@ export const sendMessage = async (req: CustomRequest, res: Response) => {
         const {message} = req.body;
         const { id : 
             receiverId } = req.params;
-        console.log(receiverId);
+        
         const senderId = req?.user?._id;
-        console.log(senderId);
+
 
         let conversation = await Conversation.findOne({
             participants:{
@@ -32,11 +31,11 @@ export const sendMessage = async (req: CustomRequest, res: Response) => {
             message
         });
 
-        // console.log(newMessage);
+        
         conversation.messages.push(newMessage._id);
         await conversation.save();
 
-        //TODO Socket.io functionality
+        //Socket.io functionality
         const receiverSocketId = getReceiverSocketId(receiverId);
 
         if(receiverSocketId){
@@ -55,7 +54,7 @@ export const sendMessage = async (req: CustomRequest, res: Response) => {
 
 export const getMessages = async (req: CustomRequest, res: Response) =>{
     try {
-        console.log("in the getMessages")
+        
         const {id: receiverId} = req.params;
         const senderId  = req.user?._id;
 

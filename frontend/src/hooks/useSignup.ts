@@ -8,15 +8,15 @@ const useSignup = () => {
   const [loading, setLoading]= useState(false);
   const {setAuthUser} = useAuthContext();
   const signup = async ({fullName, username, email, password, confirmPassword, gender}: UserI) => {
-    console.log('working')
+
     const success= handleInputErrors({fullName, username, email, password, confirmPassword, gender})
-    console.log(success)
+ 
     if(!success){
       return;
     }
 
-    setLoading(true);
     try {
+      setLoading(true);
       const res = await fetch('/api/auth/signup', {
         method: "POST",
         headers: {

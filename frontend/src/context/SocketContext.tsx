@@ -32,8 +32,6 @@ export const SocketContextProvider:React.FC<SocketContextProvider> = ({children}
             });
             setSocket(socket);
 
-            // console.log("in the connection", socket);
-
             socket.on("getOnlineUsers", (users) => {
                 setOnlineUsers(users);
             });

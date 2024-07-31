@@ -18,7 +18,7 @@ export const singupUser = async (req: Request, res: Response) => {
 
         const salt = await bcryptjs.genSalt(10);
         const hashedPassword = await bcryptjs.hash(password, salt);
-        console.log(hashedPassword);
+
         const existing = await User.findOne({email, username});
       
         if(existing){
@@ -39,14 +39,15 @@ export const singupUser = async (req: Request, res: Response) => {
             gender,
             profilePic: gender === "male" ? boyProfilePic : girlProfilePic
         });
-        console.log(user);
+     
         generateTokenSetCookie(user._id as mongoose.Types.ObjectId, res);
         return res.status(200).json(
             {   
-                id: user._id,
+                _id: user._id,
+                fullName: user.fullName,
                 username: user.username,
-                profilePic: user.profilePic,
-                success: true
+                email: user.email,
+                profilePic: user.profilePic
             }
         );
     } catch (error) {
@@ -59,7 +60,7 @@ export const loginUser = async (req: Request, res: Response) => {
     try {
         const {username, password} = req.body;
         const user = await User.findOne({username});
-        // console.log(user);
+    
         const compare = await bcryptjs.compare(password, user?.password || "");
 
         if (!user || !compare) {
@@ -89,6 +90,7 @@ export const logout = (req: Request, res: Response) => {
     }
 };
 
+//Todo
 export const forgotPassword = (req: Request, res: Response) => {
 
 };

@@ -35,7 +35,6 @@ const Signup: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
-      console.log(inputs);
       await signup(inputs);
     } catch (error) {
       console.log(error)
@@ -126,7 +125,7 @@ const Signup: React.FC = () => {
             to="/login"
             className="text-sm hover:underline hover:text-blue-600 mt-2 inline-block"
           >
-            Don't have an Account
+            Already have an Account
           </Link>
           <div>
             <button type="submit" className="btn btn-block btn-sm mt-2">Register</button>
