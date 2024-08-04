@@ -1,20 +1,25 @@
-import React, { useState } from "react"
+import React from "react"
 import userConverstaion from "../../zustand/useConversation";
 import { useAuthContext } from "../../context/AuthContext";
 import { extractTime } from "../../utils/extractTime";
 interface MessageI{
     _id: string;
     message: string;
-    revceiverId: string;
+    receiverId: string;
     senderId: string;
     updatedAt: string;
     createdAt: string;
-    ___v: string;
+    shouldShake?: boolean;
 }
-const Message: React.FC<MessageI> = ({message}) => {
+
+interface MessageProps {
+    message: MessageI;
+}
+
+const Message: React.FC<MessageProps> = ({message}) => {
     const {authUser} = useAuthContext();
     const {selectedConversation} = userConverstaion();
-    const fromMe = message.senderId === authUser._id;
+    const fromMe = message.senderId === authUser?._id;
     const chatClassName = fromMe ? 'chat-end' : 'chat-start';
     const profilePic = fromMe ? authUser.profilePic : selectedConversation.profilePic;
     const formattedDate = extractTime(message.createdAt);

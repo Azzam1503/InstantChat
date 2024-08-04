@@ -3,25 +3,24 @@ import { create } from "zustand";
 interface ConversationState {
     selectedConversation: any;
     setSelectedConversation: (selectedConversation: any) => void;
-    messages: string[];
-    setMessages: (messages: string[]) => void;
+    messages: MessageI[];
+    setMessages: (messages: MessageI[]) => void;
   }
 
-  interface MessageI {
+  export interface MessageI {
     _id: string;
     message: string;
     receiverId: string;
     senderId: string;
     updatedAt: string;
     createdAt: string;
-    __v: string;
 }
 
 
 const userConverstaion = create<ConversationState>((set) => ({
     selectedConversation: null,
     setSelectedConversation: (selectedConversation: any) => set({selectedConversation}),
-    messages:[],
+    messages: [],
     setMessages: (messages:MessageI[]) => set({messages}),
 }))
 

@@ -3,8 +3,6 @@ import Signup from "./pages/signup/Signup"
 import Home from "./pages/home/Home"
 import { Navigate, Route, Routes } from "react-router-dom"
 import { useAuthContext } from "./context/AuthContext";
-import userConverstaion from "./zustand/useConversation";
-
 
 function App() {
   const {authUser} = useAuthContext();

@@ -7,7 +7,7 @@ import useListenMessage from "../../hooks/useListenMessage";
 const Messages = () => {
     const {loading, messages} = useGetMessages();
     useListenMessage(); 
-    const lastMessageRef = useRef();
+    const lastMessageRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
         setTimeout(() => {
             lastMessageRef.current?.scrollIntoView({behavior: "smooth"});

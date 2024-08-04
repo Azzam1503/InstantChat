@@ -8,35 +8,41 @@ interface SocketContextType {
     onlineUsers: string[];
 };
 
-export const SocketContext = createContext<SocketContextType | undefined>();
+export const SocketContext = createContext<SocketContextType | undefined>(undefined);
 
-interface SocketContextProvider {
+interface SocketContextProviderProps {
     children: ReactNode
 }
 
 export const useSocketContext = () => {
-    return useContext(SocketContext);
+    const context = useContext(SocketContext);
+    if (context === undefined) {
+        throw new Error('useSocketContext must be used within a SocketContextProvider');
+    }
+    return context;
 }
-export const SocketContextProvider:React.FC<SocketContextProvider> = ({children}) => {
-    const [socket, setSocket] = useState(null);
+export const SocketContextProvider:React.FC<SocketContextProviderProps> = ({children}) => {
+    const [socket, setSocket] = useState<Socket | null>(null);
     const [onlineUsers, setOnlineUsers] = useState<string[]>([]);
 
     const {authUser} =  useAuthContext();
 
     useEffect(() => {
         if(authUser){
-            const socket = new io("http://localhost:3000", {
+            const socket: Socket = io("http://localhost:3000", {
                 query: {
                     userId: authUser._id
                 }
             });
             setSocket(socket);
 
-            socket.on("getOnlineUsers", (users) => {
+            socket.on("getOnlineUsers", (users: string[]) => {
                 setOnlineUsers(users);
             });
 
-            return () => socket.close();
+            return () => {
+                socket.close()
+            };
         }else{
             if(socket){
                 socket.close();

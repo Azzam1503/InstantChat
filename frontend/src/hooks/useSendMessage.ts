@@ -1,4 +1,3 @@
-import { sendMessage } from './../../../backend/src/controllers/message.controller';
 import { useState } from "react";
 import userConverstaion from "../zustand/useConversation";
 import toast from 'react-hot-toast';
@@ -7,7 +6,7 @@ const useSendMessage = () => {
     const [loading, setLoading] = useState(false);
     const { messages, setMessages, selectedConversation} = userConverstaion();
 
-    const sendMessage = async (message) => {
+    const sendMessage = async (message: string) => {
         try {
             setLoading(true);
             const res = await fetch(`/api/messages/send/${selectedConversation._id}`, {
@@ -25,7 +24,11 @@ const useSendMessage = () => {
             }
             setMessages([...messages, data]);
         } catch (error) {
-            toast.error(error.message);
+            if (error instanceof Error) {
+                toast.error(error.message);
+            } else {
+                toast.error('An unexpected error occurred');
+            }
         }finally{
             setLoading(false);
         }

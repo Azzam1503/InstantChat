@@ -1,8 +1,16 @@
 import { createContext, ReactNode, useContext, useState } from "react";
 
+interface AuthUserI {
+    email: string,
+    fullName: string,
+    _id: string;
+    username: string;
+    profilePic: string
+}
+
 interface AuthContextType {
-    authUser: string | null;
-    setAuthUser: (user: any | null) => void;
+    authUser: AuthUserI | null;
+    setAuthUser: (user: AuthUserI | null) => void;
 }
 
 
@@ -22,10 +30,10 @@ interface AuthProviderProps {
 }
 
 export const AuthContextProvider = ({children}: AuthProviderProps) =>{
-    // const storedUser = localStorage.getItem("chat-user");
-    // const initialAuthUser = storedUser ? JSON.parse(storedUser) : null;
-    const [authUser, setAuthUser] = useState<string | null>(JSON.parse(localStorage.getItem("chat-user")|| "null"));
+    const storedUser = localStorage.getItem("chat-user");
+    const initialAuthUser = storedUser ? JSON.parse(storedUser) : null;
+    const [authUser, setAuthUser] = useState<AuthUserI | null>(initialAuthUser);
     return <AuthContext.Provider value={{authUser, setAuthUser}}>
         {children}
     </AuthContext.Provider>;
-}
+} 

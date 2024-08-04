@@ -5,6 +5,6 @@ export function extractTime(dateString: string): string{
     return `${hours}:${minutes}`
 }
 
-function padZero(number) : string{
+function padZero(number: number) : string{
     return number.toString().padStart(2, "0");
 }
