@@ -20,7 +20,9 @@ export const useSocketContext = () => {
         throw new Error('useSocketContext must be used within a SocketContextProvider');
     }
     return context;
-}
+};
+
+const socketURL = import.meta.env.MODE === "development" ? "http://localhost:3000" : "/";
 export const SocketContextProvider:React.FC<SocketContextProviderProps> = ({children}) => {
     const [socket, setSocket] = useState<Socket | null>(null);
     const [onlineUsers, setOnlineUsers] = useState<string[]>([]);
@@ -29,7 +31,7 @@ export const SocketContextProvider:React.FC<SocketContextProviderProps> = ({chil
 
     useEffect(() => {
         if(authUser){
-            const socket: Socket = io("http://localhost:3000", {
+            const socket: Socket = io(socketURL, {
                 query: {
                     userId: authUser._id
                 }
